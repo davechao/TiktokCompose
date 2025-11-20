@@ -1,4 +1,4 @@
-package com.example.myapplication.video
+package com.example.myapplication.feature.inbox
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @Composable
-fun VideoPage(
+fun InboxPage(
     navController: NavController
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Text("Video")
+        Text("Inbox")
     }
 }

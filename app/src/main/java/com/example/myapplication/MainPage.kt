@@ -18,10 +18,11 @@ import com.example.myapplication.navigation.DestinationRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
-fun RootPage() {
+fun MainPage() {
 
     val navController = rememberNavController()
     val currentBackStackEntryAsState by navController.currentBackStackEntryAsState()
+
     val currentDestination = currentBackStackEntryAsState?.destination
     val context = LocalContext.current
 

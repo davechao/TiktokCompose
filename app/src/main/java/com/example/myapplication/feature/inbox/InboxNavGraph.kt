@@ -1,4 +1,4 @@
-package com.example.myapplication.inbox
+package com.example.myapplication.feature.inbox
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

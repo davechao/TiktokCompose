@@ -76,11 +76,15 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
     // hilt
-    implementation(libs.hilt.android)
+    implementation(libs.bundles.hilt)
     ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
+
+    // Media 3
+    implementation(libs.bundles.androidx.madia3)
+
+    // coil
+    implementation(libs.bundles.coil)
 
     // timber
     implementation(libs.timber)

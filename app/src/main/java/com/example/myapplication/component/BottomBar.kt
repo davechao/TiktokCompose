@@ -55,13 +55,6 @@ private fun RowScope.BottomItem(
                 Text(
                     text = stringResource(id = destination.title),
                     style = MaterialTheme.typography.labelSmall,
-                    softWrap = false,
-                    color = MaterialTheme.colorScheme.onSurface.copy(
-                        alpha = when {
-                            isCurrentBottomItemSelected -> 1f
-                            else -> 0.7f
-                        }
-                    )
                 )
             }
         },

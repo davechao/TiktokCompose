@@ -1,4 +1,4 @@
-package com.example.myapplication.profile
+package com.example.myapplication.feature.profile
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

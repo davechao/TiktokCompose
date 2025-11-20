@@ -1,4 +1,4 @@
-package com.example.myapplication.video
+package com.example.myapplication.feature.video
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
