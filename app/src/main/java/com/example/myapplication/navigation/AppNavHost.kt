@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.example.myapplication.feature.inbox.inboxNavGraph
-import com.example.myapplication.feature.profile.profileNavGraph
-import com.example.myapplication.feature.video.videoNavGraph
+import com.example.myapplication.navigation.graph.inboxNavGraph
+import com.example.myapplication.navigation.graph.profileNavGraph
+import com.example.myapplication.navigation.graph.videoNavGraph
 
 @Composable
 fun AppNavHost(

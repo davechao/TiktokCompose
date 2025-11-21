@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.component.BottomBar
+import com.example.myapplication.widget.BottomBar
 import com.example.myapplication.navigation.AppNavHost
 import com.example.myapplication.navigation.DestinationRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
