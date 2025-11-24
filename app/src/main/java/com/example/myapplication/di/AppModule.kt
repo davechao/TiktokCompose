@@ -14,5 +14,4 @@ object AppModule {
     @Provides
     fun provideContext(app: Application): Context = app.applicationContext
 
-
 }

@@ -7,9 +7,9 @@ import android.provider.Settings
 import timber.log.Timber
 
 object IntentUtils {
+
     fun Context.share(
         type: String = "text/plain",
-        title: String = "",
         text: String = ""
     ) {
         val intent = Intent(Intent.ACTION_SEND).apply {

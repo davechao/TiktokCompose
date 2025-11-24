@@ -34,11 +34,6 @@ fun VideoScreen(
     ) {
         TikTokVerticalVideoPager(
             videos = uiState.value.videos,
-            onclickComment = { videoId -> },
-            onClickLike = { videoId, likeStatus -> },
-            onclickFavourite = {},
-            onClickAudio = {},
-            onClickUser = { userId -> }
         )
     }
 }

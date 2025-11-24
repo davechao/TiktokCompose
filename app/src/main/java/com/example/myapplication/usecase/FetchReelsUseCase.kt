@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FetchReelsUseCase @Inject constructor(
-    private val repo: VideoRepository
+    private val repository: VideoRepository
 ) {
     operator fun invoke(): Flow<List<VideoItem>> {
-        return repo.fetchVideos()
+        return repository.fetchVideos()
     }
 }

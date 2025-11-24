@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.video
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -18,7 +19,6 @@ import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
@@ -53,7 +53,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -77,13 +76,6 @@ fun TikTokVerticalVideoPager(
     videos: List<VideoItem>,
     initialPage: Int? = 0,
     showUploadDate: Boolean = false,
-    onclickComment: (videoId: String) -> Unit,
-    onClickLike: (videoId: String, likeStatus: Boolean) -> Unit,
-    onclickFavourite: (videoId: String) -> Unit,
-    onClickAudio: (VideoItem) -> Unit,
-    onClickUser: (userId: Long) -> Unit,
-    onClickFavourite: (isFav: Boolean) -> Unit = {},
-    onClickShare: (() -> Unit)? = null
 ) {
     val pagerState = rememberPagerState(
         initialPage = initialPage ?: 0,
@@ -97,6 +89,8 @@ fun TikTokVerticalVideoPager(
             easing = LinearEasing, durationMillis = 300
         )
     )
+
+    val context: Context = LocalContext.current
 
     VerticalPager(
         state = pagerState,
@@ -124,7 +118,7 @@ fun TikTokVerticalVideoPager(
                 pageIndex = it,
                 onSingleTap = {
                     pauseButtonVisibility = it.isPlaying
-                    it.playWhenReady = !it.isPlaying
+                    it.playWhenReady = it.isPlaying.not()
                 },
                 onDoubleTap = { exoPlayer, offset ->
                     coroutineScope.launch {
@@ -154,18 +148,15 @@ fun TikTokVerticalVideoPager(
                             .weight(1f),
                         item = videos[it],
                         showUploadDate = showUploadDate,
-                        onClickAudio = onClickAudio,
-                        onClickUser = onClickUser,
                     )
 
                     SideItemView(
                         modifier = Modifier,
                         item = videos[it],
                         doubleTabState = doubleTapState,
-                        onclickComment = onclickComment,
-                        onClickUser = onClickUser,
-                        onClickFavourite = onClickFavourite,
-                        onClickShare = onClickShare
+                        onClickShare = {
+                            context.share(text = it)
+                        }
                     )
                 }
                 12.dp.Space()
@@ -214,8 +205,8 @@ fun TikTokVerticalVideoPager(
                     painter = painterResource(id = R.drawable.ic_like),
                     contentDescription = null,
                     tint = when {
-                        doubleTapState.second -> MaterialTheme.colorScheme.primary
-                        else -> MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+                        doubleTapState.second -> Color.Red
+                        else -> Color.Red.copy(alpha = 0.8f)
                     },
                     modifier = Modifier
                         .size(iconSize)
@@ -232,17 +223,13 @@ private fun FooterItemView(
     modifier: Modifier,
     item: VideoItem,
     showUploadDate: Boolean,
-    onClickAudio: (VideoItem) -> Unit,
-    onClickUser: (userId: Long) -> Unit,
 ) {
     Column(
-        modifier = modifier, verticalArrangement = Arrangement.Bottom
+        modifier = modifier,
+        verticalArrangement = Arrangement.Bottom,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.clickable {
-                onClickUser(item.authorDetails.userId)
-            }
         ) {
             Text(
                 text = item.authorDetails.fullName,
@@ -267,15 +254,17 @@ private fun FooterItemView(
 
         10.dp.Space()
 
-        val audioInfo: String = item.audioModel?.run {
-            "Original sound - ${audioAuthor.uniqueUserName} - ${audioAuthor.fullName}"
-        }
-            ?: item.run { "Original sound - ${item.authorDetails.uniqueUserName} - ${item.authorDetails.fullName}" }
+        val audioInfo: String = item.audioModel
+            ?.run {
+                "Original sound - ${audioAuthor.uniqueUserName} - ${audioAuthor.fullName}"
+            }
+            ?: item.run {
+                "Original sound - ${item.authorDetails.uniqueUserName} - ${item.authorDetails.fullName}"
+            }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.clickable { onClickAudio(item) }
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_music_note),
@@ -299,15 +288,23 @@ private fun SideItemView(
     modifier: Modifier,
     item: VideoItem,
     doubleTabState: Triple<Offset, Boolean, Float>,
-    onclickComment: (videoId: String) -> Unit,
-    onClickUser: (userId: Long) -> Unit,
-    onClickShare: (() -> Unit)? = null,
-    onClickFavourite: (isFav: Boolean) -> Unit
+    onClickShare: (url: String) -> Unit,
 ) {
-    val context = LocalContext.current
+    var isLiked by remember {
+        mutableStateOf(item.currentViewerInteraction.isLikedByYou)
+    }
+
+    LaunchedEffect(
+        key1 = doubleTabState
+    ) {
+        if (doubleTabState.first != Offset.Unspecified && doubleTabState.second) {
+            isLiked = doubleTabState.second
+        }
+    }
 
     Column(
-        modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         AsyncImage(
             model = item.authorDetails.profilePic,
@@ -318,36 +315,12 @@ private fun SideItemView(
                     BorderStroke(width = 1.dp, color = Color.White),
                     shape = CircleShape,
                 )
-                .clip(shape = CircleShape)
-                .clickable {
-                    onClickUser.invoke(item.authorDetails.userId)
-                },
+                .clip(shape = CircleShape),
             contentScale = ContentScale.Crop
-        )
-
-        Image(
-            painter = painterResource(id = R.drawable.ic_plus),
-            contentDescription = null,
-            modifier = Modifier
-                .offset(y = (-10).dp)
-                .size(20.dp)
-                .clip(CircleShape)
-                .background(color = MaterialTheme.colorScheme.primary)
-                .padding(5.5.dp),
-            colorFilter = ColorFilter.tint(Color.White)
         )
 
         12.dp.Space()
 
-        var isLiked by remember {
-            mutableStateOf(item.currentViewerInteraction.isLikedByYou)
-        }
-
-        LaunchedEffect(key1 = doubleTabState) {
-            if (doubleTabState.first != Offset.Unspecified && doubleTabState.second) {
-                isLiked = doubleTabState.second
-            }
-        }
         LikeIconButton(
             isLiked = isLiked,
             likeCount = item.videoStats.formattedLikeCount,
@@ -361,11 +334,7 @@ private fun SideItemView(
             painter = painterResource(id = R.drawable.ic_comment),
             contentDescription = null,
             tint = Color.Unspecified,
-            modifier = Modifier
-                .size(33.dp)
-                .clickable {
-                    onclickComment(item.videoId)
-                }
+            modifier = Modifier.size(33.dp)
         )
 
         Text(
@@ -396,11 +365,7 @@ private fun SideItemView(
             modifier = Modifier
                 .size(32.dp)
                 .clickable {
-                    onClickShare?.let { onClickShare.invoke() } ?: run {
-                        context.share(
-                            text = "https://github.com/puskal-khadka"
-                        )
-                    }
+                    onClickShare("https://www.android.com/")
                 }
         )
 
@@ -448,14 +413,17 @@ private fun LikeIconButton(
             painter = painterResource(id = R.drawable.ic_heart),
             contentDescription = null,
             tint = when {
-                isLiked -> MaterialTheme.colorScheme.primary
+                isLiked -> Color.Red
                 else -> Color.White
             },
             modifier = Modifier.size(iconSize)
         )
     }
 
-    Text(text = likeCount, style = MaterialTheme.typography.labelMedium)
+    Text(
+        text = likeCount,
+        style = MaterialTheme.typography.labelMedium,
+    )
 
     16.dp.Space()
 }
