@@ -18,7 +18,7 @@ import com.example.myapplication.navigation.DestinationRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
-fun MainPage() {
+fun MainScreen() {
 
     val navController = rememberNavController()
     val currentBackStackEntryAsState by navController.currentBackStackEntryAsState()
@@ -27,19 +27,18 @@ fun MainPage() {
     val context = LocalContext.current
 
     val isShowBottomBar = when (currentDestination?.route) {
-        DestinationRoute.VIDEO_SCREEN_ROUTE,
-        DestinationRoute.INBOX_SCREEN_ROUTE,
-        DestinationRoute.PROFILE_SCREEN_ROUTE -> true
+        DestinationRoute.REELS_SCREEN_ROUTE,
+        DestinationRoute.FRIEND_SCREEN_ROUTE -> true
 
         else -> false
     }
 
     val isDarkMode = when (currentDestination?.route) {
-        DestinationRoute.VIDEO_SCREEN_ROUTE -> true
+        DestinationRoute.REELS_SCREEN_ROUTE -> true
         else -> false
     }
 
-    if (currentDestination?.route == DestinationRoute.VIDEO_SCREEN_ROUTE) {
+    if (currentDestination?.route == DestinationRoute.REELS_SCREEN_ROUTE) {
         BackHandler {
             (context as? Activity)?.finish()
         }

@@ -1,7 +1,6 @@
 package com.example.myapplication.navigation
 
 object DestinationRoute {
-    const val VIDEO_SCREEN_ROUTE = "video_screen_route"
-    const val INBOX_SCREEN_ROUTE = "inbox_screen_route"
-    const val PROFILE_SCREEN_ROUTE = "profile_screen_route"
+    const val REELS_SCREEN_ROUTE = "reels_screen_route"
+    const val FRIEND_SCREEN_ROUTE = "friend_screen_route"
 }

@@ -5,6 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class InboxViewModel @Inject constructor() : ViewModel() {
+class FriendViewModel @Inject constructor() : ViewModel() {
 
 }

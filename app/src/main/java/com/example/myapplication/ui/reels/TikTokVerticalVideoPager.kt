@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.video
+package com.example.myapplication.ui.reels
 
 import android.annotation.SuppressLint
 import android.content.Context

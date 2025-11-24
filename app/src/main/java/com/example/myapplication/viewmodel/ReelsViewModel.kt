@@ -2,7 +2,7 @@ package com.example.myapplication.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapplication.ui.video.VideoUiState
+import com.example.myapplication.ui.reels.ReelsUiState
 import com.example.myapplication.usecase.FetchReelsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,12 +14,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class VideoViewModel @Inject constructor(
+class ReelsViewModel @Inject constructor(
     private val useCase: FetchReelsUseCase,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(VideoUiState())
-    val uiState: StateFlow<VideoUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(ReelsUiState())
+    val uiState: StateFlow<ReelsUiState> = _uiState.asStateFlow()
 
     init {
         fetchReels()

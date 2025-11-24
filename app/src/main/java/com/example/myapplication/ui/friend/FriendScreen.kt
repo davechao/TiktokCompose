@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.profile
+package com.example.myapplication.ui.friend
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,17 +8,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.myapplication.viewmodel.ProfileViewModel
+import com.example.myapplication.viewmodel.FriendViewModel
 
 @Composable
-fun ProfileScreen(
+fun FriendScreen(
     navController: NavController,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: FriendViewModel = hiltViewModel()
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        Text("Profile")
+        Text("Friends")
     }
 }

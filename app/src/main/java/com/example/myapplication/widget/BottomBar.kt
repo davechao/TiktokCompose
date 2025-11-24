@@ -8,8 +8,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -42,27 +40,29 @@ private fun RowScope.BottomItem(
         it.route == destination.route
     } ?: false
 
-    var icon: Int = destination.unFilledIcon
-    destination.apply {
-        if (isCurrentBottomItemSelected) {
-            filledIcon?.let { icon = it }
-        }
-    }
-
     NavigationBarItem(
         label = {
             destination.title?.let {
                 Text(
                     text = stringResource(id = destination.title),
                     style = MaterialTheme.typography.labelSmall,
+                    softWrap = false,
+                    color = MaterialTheme.colorScheme.onSurface.copy(
+                        alpha = when {
+                            isCurrentBottomItemSelected -> 1f
+                            else -> 0.7f
+                        }
+                    )
                 )
             }
         },
         icon = {
             Icon(
-                painter = painterResource(id = icon),
+                imageVector = when {
+                    isCurrentBottomItemSelected -> destination.filledIcon
+                    else -> destination.unfilledIcon
+                } ?: destination.unfilledIcon,
                 contentDescription = null,
-                tint = Color.Unspecified,
             )
         },
         colors = NavigationBarItemDefaults.colors(

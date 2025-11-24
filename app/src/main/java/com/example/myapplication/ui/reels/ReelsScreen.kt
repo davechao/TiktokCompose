@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.video
+package com.example.myapplication.ui.reels
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -11,12 +11,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.myapplication.ui.theme.DarkBlue
 import com.example.myapplication.ui.theme.DarkPink
-import com.example.myapplication.viewmodel.VideoViewModel
+import com.example.myapplication.viewmodel.ReelsViewModel
 
 @Composable
-fun VideoScreen(
+fun ReelsScreen(
     navController: NavController,
-    viewModel: VideoViewModel = hiltViewModel()
+    viewModel: ReelsViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState()
 

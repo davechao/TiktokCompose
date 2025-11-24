@@ -3,11 +3,11 @@ package com.example.myapplication.navigation.graph
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.example.myapplication.ui.inbox.InboxScreen
+import com.example.myapplication.ui.reels.ReelsScreen
 import com.example.myapplication.navigation.DestinationRoute
 
-fun NavGraphBuilder.inboxNavGraph(navController: NavController) {
-    composable(route = DestinationRoute.INBOX_SCREEN_ROUTE) {
-        InboxScreen(navController)
+fun NavGraphBuilder.reelsNavGraph(navController: NavController) {
+    composable(route = DestinationRoute.REELS_SCREEN_ROUTE) {
+        ReelsScreen(navController)
     }
 }

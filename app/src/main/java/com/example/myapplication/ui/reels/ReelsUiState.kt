@@ -1,7 +1,7 @@
-package com.example.myapplication.ui.video
+package com.example.myapplication.ui.reels
 
 import com.example.myapplication.model.VideoItem
 
-data class VideoUiState(
+data class ReelsUiState(
     val videos: List<VideoItem> = mutableListOf(),
 )

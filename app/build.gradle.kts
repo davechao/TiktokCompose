@@ -76,11 +76,14 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // material-icons-extended
+    implementation(libs.material.icons.extended)
+
     // hilt
     implementation(libs.bundles.hilt)
     ksp(libs.hilt.android.compiler)
 
-    // Media 3
+    // media 3
     implementation(libs.bundles.androidx.madia3)
 
     // coil
