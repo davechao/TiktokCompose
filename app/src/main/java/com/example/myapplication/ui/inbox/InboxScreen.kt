@@ -1,4 +1,4 @@
-package com.example.myapplication.page
+package com.example.myapplication.ui.inbox
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,7 +11,7 @@ import androidx.navigation.NavController
 import com.example.myapplication.viewmodel.InboxViewModel
 
 @Composable
-fun InboxPage(
+fun InboxScreen(
     navController: NavController,
     viewModel: InboxViewModel = hiltViewModel()
 ) {

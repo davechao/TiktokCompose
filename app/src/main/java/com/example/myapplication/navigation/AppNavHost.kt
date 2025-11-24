@@ -12,7 +12,7 @@ import com.example.myapplication.navigation.graph.videoNavGraph
 fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = DestinationRoute.VIDEO_PAGE_ROUTE
+    startDestination: String = DestinationRoute.VIDEO_SCREEN_ROUTE
 ) {
     NavHost(
         navController = navController,

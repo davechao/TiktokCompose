@@ -1,7 +1,7 @@
 package com.example.myapplication.datasource
 
-import com.example.myapplication.bean.SocialMediaType
-import com.example.myapplication.bean.UserItem
+import com.example.myapplication.model.SocialMediaType
+import com.example.myapplication.model.UserItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

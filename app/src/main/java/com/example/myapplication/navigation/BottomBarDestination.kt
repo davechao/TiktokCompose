@@ -12,21 +12,21 @@ enum class BottomBarDestination(
     @DrawableRes val filledIcon: Int? = null,
 ) {
     HOME(
-        route = DestinationRoute.VIDEO_PAGE_ROUTE,
+        route = DestinationRoute.VIDEO_SCREEN_ROUTE,
         title = R.string.home,
         unFilledIcon = R.drawable.ic_home,
         filledIcon = R.drawable.ic_home_fill
     ),
 
     INBOX(
-        route = DestinationRoute.INBOX_PAGE_ROUTE,
+        route = DestinationRoute.INBOX_SCREEN_ROUTE,
         title = R.string.inbox,
         unFilledIcon = R.drawable.ic_inbox,
         filledIcon = R.drawable.ic_inbox_fill
     ),
 
     Profile(
-        route = DestinationRoute.PROFILE_PAGE_ROUTE,
+        route = DestinationRoute.PROFILE_SCREEN_ROUTE,
         title = R.string.profile,
         unFilledIcon = R.drawable.ic_profile,
         filledIcon = R.drawable.ic_profile_fill

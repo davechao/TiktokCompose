@@ -1,6 +1,6 @@
 package com.example.myapplication.usecase
 
-import com.example.myapplication.bean.VideoItem
+import com.example.myapplication.model.VideoItem
 import com.example.myapplication.repository.VideoRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.myapplication.widget
+package com.example.myapplication.ui.video
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
@@ -61,7 +61,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.myapplication.R
-import com.example.myapplication.bean.VideoItem
+import com.example.myapplication.model.VideoItem
 import com.example.myapplication.player.VideoPlayer
 import com.example.myapplication.ui.theme.Gray20
 import com.example.myapplication.ui.theme.GrayLight
@@ -119,7 +119,7 @@ fun TikTokVerticalVideoPager(
             modifier = Modifier.fillMaxSize()
         ) {
             VideoPlayer(
-                video = videos[it],
+                url = videos[it].videoLink,
                 pagerState = pagerState,
                 pageIndex = it,
                 onSingleTap = {

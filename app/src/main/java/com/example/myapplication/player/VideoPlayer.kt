@@ -33,7 +33,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import coil.compose.AsyncImage
-import com.example.myapplication.bean.VideoItem
 import com.example.myapplication.util.FileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -43,7 +42,7 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun VideoPlayer(
-    video: VideoItem,
+    url: String,
     pagerState: PagerState,
     pageIndex: Int,
     onSingleTap: (exoPlayer: ExoPlayer) -> Unit,
@@ -60,7 +59,7 @@ fun VideoPlayer(
     LaunchedEffect(key1 = true) {
         withContext(Dispatchers.IO) {
             val bm = FileUtils.extractThumbnail(
-                context.assets.openFd("videos/${video.videoLink}"),
+                context.assets.openFd("videos/${url}"),
                 1
             )
             withContext(Dispatchers.Main) {
@@ -77,7 +76,7 @@ fun VideoPlayer(
             ExoPlayer.Builder(context).build().apply {
                 videoScalingMode = C.VIDEO_SCALING_MODE_SCALE_TO_FIT
                 repeatMode = Player.REPEAT_MODE_ONE
-                setMediaItem(MediaItem.fromUri(Uri.parse("asset:///videos/${video.videoLink}")))
+                setMediaItem(MediaItem.fromUri(Uri.parse("asset:///videos/${url}")))
                 playWhenReady = true
                 prepare()
                 addListener(object : Player.Listener {

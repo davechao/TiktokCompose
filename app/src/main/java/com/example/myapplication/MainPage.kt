@@ -27,19 +27,19 @@ fun MainPage() {
     val context = LocalContext.current
 
     val isShowBottomBar = when (currentDestination?.route) {
-        DestinationRoute.VIDEO_PAGE_ROUTE,
-        DestinationRoute.INBOX_PAGE_ROUTE,
-        DestinationRoute.PROFILE_PAGE_ROUTE -> true
+        DestinationRoute.VIDEO_SCREEN_ROUTE,
+        DestinationRoute.INBOX_SCREEN_ROUTE,
+        DestinationRoute.PROFILE_SCREEN_ROUTE -> true
 
         else -> false
     }
 
     val isDarkMode = when (currentDestination?.route) {
-        DestinationRoute.VIDEO_PAGE_ROUTE -> true
+        DestinationRoute.VIDEO_SCREEN_ROUTE -> true
         else -> false
     }
 
-    if (currentDestination?.route == DestinationRoute.VIDEO_PAGE_ROUTE) {
+    if (currentDestination?.route == DestinationRoute.VIDEO_SCREEN_ROUTE) {
         BackHandler {
             (context as? Activity)?.finish()
         }

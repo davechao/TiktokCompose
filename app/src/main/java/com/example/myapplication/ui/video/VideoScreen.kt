@@ -1,23 +1,25 @@
-package com.example.myapplication.page
+package com.example.myapplication.ui.video
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.myapplication.widget.TikTokVerticalVideoPager
 import com.example.myapplication.ui.theme.DarkBlue
 import com.example.myapplication.ui.theme.DarkPink
 import com.example.myapplication.viewmodel.VideoViewModel
 
 @Composable
-fun VideoPage(
+fun VideoScreen(
     navController: NavController,
     viewModel: VideoViewModel = hiltViewModel()
 ) {
+    val uiState = viewModel.uiState.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -30,15 +32,13 @@ fun VideoPage(
                 )
             )
     ) {
-//        TikTokVerticalVideoPager(
-//            videos = it,
-//            onclickComment = {
-////                navController.navigate(COMMENT_BOTTOM_SHEET_ROUTE)
-//            },
-//            onClickLike = { videoId, likeStatus -> },
-//            onclickFavourite = {},
-//            onClickAudio = {},
-//            onClickUser = { userId -> }
-//        )
+        TikTokVerticalVideoPager(
+            videos = uiState.value.videos,
+            onclickComment = { videoId -> },
+            onClickLike = { videoId, likeStatus -> },
+            onclickFavourite = {},
+            onClickAudio = {},
+            onClickUser = { userId -> }
+        )
     }
 }

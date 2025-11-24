@@ -10,7 +10,7 @@ import com.example.myapplication.datasource.UsersDataSource.kylieJenner
 import com.example.myapplication.datasource.UsersDataSource.shana
 import com.example.myapplication.datasource.UsersDataSource.taylor
 import com.example.myapplication.datasource.UsersDataSource.zoya
-import com.example.myapplication.bean.VideoItem
+import com.example.myapplication.model.VideoItem
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

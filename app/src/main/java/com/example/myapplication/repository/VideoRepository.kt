@@ -1,7 +1,7 @@
 package com.example.myapplication.repository
 
 import com.example.myapplication.datasource.VideoDataSource
-import com.example.myapplication.bean.VideoItem
+import com.example.myapplication.model.VideoItem
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
