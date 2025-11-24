@@ -15,8 +15,10 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "RESTFUL_API_HOST", "\"https://api.github.com\"")
+
         vectorDrawables {
             useSupportLibrary = true
         }
