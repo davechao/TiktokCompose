@@ -25,7 +25,7 @@ enum class BottomBarDestination(
 
     FRIEND(
         route = DestinationRoute.FRIEND_SCREEN_ROUTE,
-        title = R.string.friend,
+        title = R.string.friends,
         unfilledIcon = Icons.Outlined.People,
         filledIcon = Icons.Filled.People,
     ),

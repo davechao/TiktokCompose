@@ -86,8 +86,17 @@ dependencies {
     // media 3
     implementation(libs.bundles.androidx.madia3)
 
+    // retrofit
+    implementation(libs.bundles.retrofit)
+
+    // coroutines
+    implementation(libs.bundles.coroutines)
+
     // coil
     implementation(libs.bundles.coil)
+
+    // lottie
+    implementation(libs.bundles.lottie)
 
     // timber
     implementation(libs.timber)
