@@ -1,5 +1,7 @@
 package com.example.myapplication.di
 
+import com.example.myapplication.repository.FriendRepository
+import com.example.myapplication.repository.FriendRepositoryImpl
 import com.example.myapplication.repository.VideoRepository
 import com.example.myapplication.repository.VideoRepositoryImpl
 import dagger.Binds
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindVideoRepository(
         impl: VideoRepositoryImpl
     ): VideoRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindFriendRepository(
+        impl: FriendRepositoryImpl
+    ): FriendRepository
 }
