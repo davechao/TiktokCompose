@@ -1,11 +1,10 @@
-package com.example.myapplication.datasource
+package com.example.myapplication.datasource.data
 
 import com.example.myapplication.model.SocialMediaType
 import com.example.myapplication.model.UserItem
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
-object UsersDataSource {
+object UserData {
+
     val kylieJenner = UserItem(
         userId = 1,
         uniqueUserName = "keyliejenner",
@@ -153,11 +152,4 @@ object UsersDataSource {
         jeremy,
         zoya
     )
-
-    fun fetchSpecificUser(userId: Long): Flow<UserItem?> {
-        return flow {
-            val user = userList.firstOrNull { it.userId == userId }
-            emit(user)
-        }
-    }
 }
