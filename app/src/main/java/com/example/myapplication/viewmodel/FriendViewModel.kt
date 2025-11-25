@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+
 @HiltViewModel
 class FriendViewModel @Inject constructor(
     private val useCase: FetchFriendsUseCase,
@@ -26,10 +27,16 @@ class FriendViewModel @Inject constructor(
 
     private fun fetchFriends() {
         viewModelScope.launch {
+            showLoading(true)
+
             val friends = useCase()
-            _uiState.update { state ->
-                state.copy(friends = friends)
-            }
+            _uiState.update { state -> state.copy(friends = friends) }
+
+            showLoading(false)
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        _uiState.update { state -> state.copy(isLoading = isLoading) }
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -63,6 +64,10 @@ fun FriendScreen(
                     }
                 )
             }
+        }
+
+        if (uiState.value.isLoading) {
+            CircularProgressIndicator()
         }
     }
 }
