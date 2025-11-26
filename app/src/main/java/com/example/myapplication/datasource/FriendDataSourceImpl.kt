@@ -7,7 +7,12 @@ import javax.inject.Inject
 class FriendDataSourceImpl @Inject constructor(
     private val api: ApiService
 ) : FriendDataSource {
+
     override suspend fun getUsers(): List<FriendItem> {
         return api.getUsers()
+    }
+
+    override suspend fun getUser(id: Int): FriendItem {
+        return api.getUserDetail(id)
     }
 }
