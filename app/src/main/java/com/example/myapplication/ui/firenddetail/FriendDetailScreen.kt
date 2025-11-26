@@ -2,6 +2,7 @@ package com.example.myapplication.ui.firenddetail
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -37,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -44,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.myapplication.model.FriendItem
 import com.example.myapplication.util.extension.Space
 import com.example.myapplication.viewmodel.FriendDetailViewModel
 
@@ -56,7 +59,7 @@ fun FriendDetailScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
-    val context: Context = LocalContext.current
+    val configuration = LocalConfiguration.current
 
     LaunchedEffect(key1 = Unit) {
         viewModel.fetchFriend(id)
@@ -95,98 +98,215 @@ fun FriendDetailScreen(
                 if (uiState.value.isLoading) {
                     CircularProgressIndicator()
                 } else {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        32.dp.Space()
-
-                        AsyncImage(
-                            model = uiState.value.friend?.avatarUrl ?: "",
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(100.dp)
-                                .border(
-                                    BorderStroke(width = 1.dp, color = Color.Black),
-                                    shape = CircleShape,
-                                )
-                                .clip(shape = CircleShape),
-                            contentScale = ContentScale.Crop
-                        )
-
-                        16.dp.Space()
-
-                        Text(
-                            text = uiState.value.friend?.name ?: "",
-                            style = MaterialTheme.typography.titleLarge
-                        )
-
-                        24.dp.Space()
-
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp),
-                            ) {
-                                uiState.value.friend?.email?.takeIf { it.isNotBlank() }
-                                    ?.let { email ->
-                                        InfoRow(label = "Email", value = email)
-                                    }
-
-                                uiState.value.friend?.location?.takeIf { it.isNotBlank() }
-                                    ?.let { location ->
-                                        InfoRow(label = "Address", value = location)
-                                    }
-
-                                uiState.value.friend?.bio?.takeIf { it.isNotBlank() }
-                                    ?.let { bio ->
-                                        InfoRow(label = "Bio", value = bio)
-                                    }
-
-                                uiState.value.friend?.blog?.takeIf { it.isNotBlank() }
-                                    ?.let { blog ->
-                                        InfoRow(
-                                            label = "Blog",
-                                            value = blog,
-                                            onClick = { url ->
-                                                val intent = Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse(url)
-                                                )
-                                                context.startActivity(intent)
-                                            }
-                                        )
-                                    }
-
-                                uiState.value.friend?.htmlUrl?.takeIf { it.isNotBlank() }
-                                    ?.let { htmlUrl ->
-                                        InfoRow(
-                                            label = "Github",
-                                            value = htmlUrl,
-                                            onClick = { url ->
-                                                val intent = Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse(url)
-                                                )
-                                                context.startActivity(intent)
-                                            }
-                                        )
-                                    }
-
-                                FriendStats(
-                                    followers = uiState.value.friend?.followers,
-                                    following = uiState.value.friend?.following
-                                )
-                            }
-                        }
+                    if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        DetailLandscapeScreen(friend = uiState.value.friend)
+                    } else {
+                        DetailPortraitScreen(friend = uiState.value.friend)
                     }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+private fun DetailPortraitScreen(
+    friend: FriendItem?
+) {
+    val context: Context = LocalContext.current
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        32.dp.Space()
+
+        AsyncImage(
+            model = friend?.avatarUrl ?: "",
+            contentDescription = null,
+            modifier = Modifier
+                .size(100.dp)
+                .border(
+                    BorderStroke(width = 1.dp, color = Color.Black),
+                    shape = CircleShape,
+                )
+                .clip(shape = CircleShape),
+            contentScale = ContentScale.Crop
+        )
+
+        16.dp.Space()
+
+        Text(
+            text = friend?.name ?: "",
+            style = MaterialTheme.typography.titleLarge
+        )
+
+        24.dp.Space()
+
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 4.dp,
+                ),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+            ) {
+                friend?.email?.takeIf { it.isNotBlank() }
+                    ?.let { email ->
+                        InfoRow(label = "Email", value = email)
+                    }
+
+                friend?.location?.takeIf { it.isNotBlank() }
+                    ?.let { location ->
+                        InfoRow(label = "Address", value = location)
+                    }
+
+                friend?.bio?.takeIf { it.isNotBlank() }
+                    ?.let { bio ->
+                        InfoRow(label = "Bio", value = bio)
+                    }
+
+                friend?.blog?.takeIf { it.isNotBlank() }
+                    ?.let { blog ->
+                        InfoRow(
+                            label = "Blog",
+                            value = blog,
+                            onClick = { url ->
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(url)
+                                )
+                                context.startActivity(intent)
+                            }
+                        )
+                    }
+
+                friend?.htmlUrl?.takeIf { it.isNotBlank() }
+                    ?.let { htmlUrl ->
+                        InfoRow(
+                            label = "Github",
+                            value = htmlUrl,
+                            onClick = { url ->
+                                val intent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(url)
+                                )
+                                context.startActivity(intent)
+                            }
+                        )
+                    }
+
+                FriendStats(
+                    followers = friend?.followers,
+                    following = friend?.following
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun DetailLandscapeScreen(
+    friend: FriendItem?
+) {
+    val context: Context = LocalContext.current
+
+    Row(
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Column(
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            AsyncImage(
+                model = friend?.avatarUrl ?: "",
+                contentDescription = null,
+                modifier = Modifier
+                    .size(100.dp)
+                    .border(
+                        BorderStroke(width = 1.dp, color = Color.Black),
+                        shape = CircleShape,
+                    )
+                    .clip(shape = CircleShape),
+                contentScale = ContentScale.Crop
+            )
+
+            16.dp.Space()
+
+            Text(
+                text = friend?.name ?: "",
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+
+        16.dp.Space()
+
+        Column(
+            modifier = Modifier.weight(1.5f),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp),
+                ) {
+                    friend?.email?.takeIf { it.isNotBlank() }
+                        ?.let { email ->
+                            InfoRow(label = "Email", value = email)
+                        }
+
+                    friend?.location?.takeIf { it.isNotBlank() }
+                        ?.let { location ->
+                            InfoRow(label = "Address", value = location)
+                        }
+
+                    friend?.bio?.takeIf { it.isNotBlank() }
+                        ?.let { bio ->
+                            InfoRow(label = "Bio", value = bio)
+                        }
+
+                    friend?.blog?.takeIf { it.isNotBlank() }
+                        ?.let { blog ->
+                            InfoRow(
+                                label = "Blog",
+                                value = blog,
+                                onClick = { url ->
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(url)
+                                    )
+                                    context.startActivity(intent)
+                                }
+                            )
+                        }
+
+                    friend?.htmlUrl?.takeIf { it.isNotBlank() }
+                        ?.let { htmlUrl ->
+                            InfoRow(
+                                label = "Github",
+                                value = htmlUrl,
+                                onClick = { url ->
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(url)
+                                    )
+                                    context.startActivity(intent)
+                                }
+                            )
+                        }
+
+                    FriendStats(
+                        followers = friend?.followers,
+                        following = friend?.following
+                    )
                 }
             }
         }
