@@ -1,8 +1,5 @@
 package com.example.myapplication.ui.friend
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -24,15 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.myapplication.model.FriendItem
+import com.example.myapplication.navigation.DestinationRoute
 import com.example.myapplication.viewmodel.FriendViewModel
 
 @Composable
@@ -41,8 +35,6 @@ fun FriendScreen(
     viewModel: FriendViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState()
-
-    val context: Context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -57,15 +49,10 @@ fun FriendScreen(
             ) { item ->
                 FriendItemView(
                     item = item,
-                    onClickLink = { url ->
-                        val intent = Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(url)
-                        )
-                        context.startActivity(intent)
-                    },
                     onClick = { id ->
-
+                        navController.navigate(
+                            route = DestinationRoute.friendDetailRoute(id)
+                        )
                     }
                 )
 
@@ -86,7 +73,6 @@ fun FriendScreen(
 @Composable
 private fun FriendItemView(
     item: FriendItem,
-    onClickLink: (String) -> Unit,
     onClick: (Int) -> Unit,
 ) {
     ListItem(
@@ -95,19 +81,6 @@ private fun FriendItemView(
         },
         modifier = Modifier.clickable {
             onClick(item.id)
-        },
-        supportingContent = {
-            Text(
-                text = item.htmlUrl ?: "",
-                modifier = Modifier.clickable {
-                    onClickLink(item.htmlUrl ?: "")
-                },
-                style = TextStyle(
-                    textDecoration = TextDecoration.Underline,
-                    color = Color.Blue,
-                    fontSize = 14.sp
-                )
-            )
         },
         leadingContent = {
             AsyncImage(

@@ -7,7 +7,9 @@ import com.example.myapplication.ui.reels.ReelsScreen
 import com.example.myapplication.navigation.DestinationRoute
 
 fun NavGraphBuilder.reelsNavGraph(navController: NavController) {
-    composable(route = DestinationRoute.REELS_SCREEN_ROUTE) {
+    composable(
+        route = DestinationRoute.REELS_SCREEN_ROUTE
+    ) {
         ReelsScreen(navController)
     }
 }
