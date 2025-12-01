@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -47,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.myapplication.model.FriendItem
+import com.example.myapplication.ui.event.UiEvent
 import com.example.myapplication.util.extension.Space
 import com.example.myapplication.viewmodel.FriendDetailViewModel
 
@@ -60,6 +62,18 @@ fun FriendDetailScreen(
     val uiState = viewModel.uiState.collectAsState()
 
     val configuration = LocalConfiguration.current
+
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is UiEvent.ShowToast -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     LaunchedEffect(key1 = Unit) {
         viewModel.fetchFriend(id)
@@ -217,7 +231,9 @@ private fun DetailLandscapeScreen(
     val context: Context = LocalContext.current
 
     Row(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.Start
     ) {
         Column(
