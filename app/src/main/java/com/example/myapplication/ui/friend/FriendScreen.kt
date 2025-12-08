@@ -26,18 +26,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.myapplication.model.FriendItem
 import com.example.myapplication.navigation.DestinationRoute
+import com.example.myapplication.navigation.LocalNavController
 import com.example.myapplication.ui.event.UiEvent
 import com.example.myapplication.viewmodel.FriendViewModel
 
 @Composable
 fun FriendScreen(
-    navController: NavController,
     viewModel: FriendViewModel = hiltViewModel()
 ) {
+    val navController = LocalNavController.current
+
     val uiState = viewModel.uiState.collectAsState()
 
     val context = LocalContext.current

@@ -19,7 +19,6 @@ import com.example.myapplication.viewmodel.ReelsViewModel
 
 @Composable
 fun ReelsScreen(
-    navController: NavController,
     viewModel: ReelsViewModel = hiltViewModel()
 ) {
     val uiState = viewModel.uiState.collectAsState()

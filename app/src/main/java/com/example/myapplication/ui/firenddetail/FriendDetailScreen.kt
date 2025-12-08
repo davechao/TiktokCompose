@@ -45,9 +45,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.myapplication.model.FriendItem
+import com.example.myapplication.navigation.LocalNavController
 import com.example.myapplication.ui.event.UiEvent
 import com.example.myapplication.util.extension.Space
 import com.example.myapplication.viewmodel.FriendDetailViewModel
@@ -55,10 +55,11 @@ import com.example.myapplication.viewmodel.FriendDetailViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FriendDetailScreen(
-    navController: NavController,
     id: Int,
     viewModel: FriendDetailViewModel = hiltViewModel()
 ) {
+    val navController = LocalNavController.current
+
     val uiState = viewModel.uiState.collectAsState()
 
     val configuration = LocalConfiguration.current

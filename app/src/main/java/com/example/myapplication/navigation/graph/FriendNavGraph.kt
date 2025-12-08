@@ -1,6 +1,5 @@
 package com.example.myapplication.navigation.graph
 
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -10,12 +9,12 @@ import com.example.myapplication.navigation.DestinationRoute
 import com.example.myapplication.navigation.DestinationRoute.ACCOUNT_ID
 import com.example.myapplication.ui.firenddetail.FriendDetailScreen
 
-fun NavGraphBuilder.friendNavGraph(navController: NavController) {
+fun NavGraphBuilder.friendNavGraph() {
 
     composable(
         route = DestinationRoute.FRIEND_SCREEN_ROUTE
     ) {
-        FriendScreen(navController)
+        FriendScreen()
     }
 
     composable(
@@ -26,7 +25,6 @@ fun NavGraphBuilder.friendNavGraph(navController: NavController) {
     ) { backStackEntry ->
         val accountId = backStackEntry.arguments?.getInt(ACCOUNT_ID) ?: return@composable
         FriendDetailScreen(
-            navController = navController,
             id = accountId
         )
     }
