@@ -17,7 +17,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.example.myapplication.model.FriendItem
 import com.example.myapplication.navigation.DestinationRoute
@@ -37,11 +38,18 @@ import com.example.myapplication.viewmodel.FriendViewModel
 fun FriendScreen(
     viewModel: FriendViewModel = hiltViewModel()
 ) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
     val navController = LocalNavController.current
-
-    val uiState = viewModel.uiState.collectAsState()
-
     val context = LocalContext.current
+
+    val onItemClick = remember {
+        { id: Int ->
+            navController.navigate(
+                route = DestinationRoute.friendDetailRoute(id)
+            )
+        }
+    }
 
     LaunchedEffect(key1 = Unit) {
         viewModel.events.collect { event ->
@@ -66,11 +74,7 @@ fun FriendScreen(
             ) { item ->
                 FriendItemView(
                     item = item,
-                    onClick = { id ->
-                        navController.navigate(
-                            route = DestinationRoute.friendDetailRoute(id)
-                        )
-                    }
+                    onClick = onItemClick,
                 )
 
                 HorizontalDivider(

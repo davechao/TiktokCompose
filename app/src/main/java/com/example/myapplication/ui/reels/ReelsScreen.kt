@@ -6,12 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.myapplication.ui.event.UiEvent
 import com.example.myapplication.ui.theme.DarkBlue
 import com.example.myapplication.ui.theme.DarkPink
@@ -21,7 +20,7 @@ import com.example.myapplication.viewmodel.ReelsViewModel
 fun ReelsScreen(
     viewModel: ReelsViewModel = hiltViewModel()
 ) {
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
 

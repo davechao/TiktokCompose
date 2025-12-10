@@ -33,7 +33,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.example.myapplication.model.FriendItem
 import com.example.myapplication.navigation.LocalNavController
@@ -58,12 +58,10 @@ fun FriendDetailScreen(
     id: Int,
     viewModel: FriendDetailViewModel = hiltViewModel()
 ) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
     val navController = LocalNavController.current
-
-    val uiState = viewModel.uiState.collectAsState()
-
     val configuration = LocalConfiguration.current
-
     val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit) {
