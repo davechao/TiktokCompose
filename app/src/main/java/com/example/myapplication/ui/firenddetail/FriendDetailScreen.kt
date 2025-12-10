@@ -337,14 +337,7 @@ private fun InfoRow(
     onClick: ((String) -> Unit)? = null
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(
-                when {
-                    onClick != null -> Modifier.clickable { onClick(value) }
-                    else -> Modifier
-                }
-            ),
+        modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -355,6 +348,12 @@ private fun InfoRow(
         )
         Text(
             text = value,
+            modifier = Modifier.then(
+                when {
+                    onClick != null -> Modifier.clickable { onClick(value) }
+                    else -> Modifier
+                }
+            ),
             style = MaterialTheme.typography.bodyLarge,
             color = when {
                 onClick != null -> Color.Blue
