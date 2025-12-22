@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.example.myapplication.navigation.BottomBarDestination
 
@@ -72,10 +73,10 @@ private fun RowScope.BottomItem(
         ),
         selected = isCurrentBottomItemSelected,
         onClick = {
-            destination.route.let {
-                navController.navigate(it) {
-                    launchSingleTop = true
-                }
+            navController.navigate(destination.route) {
+                popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
             }
         }
     )

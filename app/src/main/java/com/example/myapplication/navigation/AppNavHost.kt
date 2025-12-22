@@ -18,7 +18,7 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 fun AppNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = DestinationRoute.REELS_SCREEN_ROUTE
+    startDestination: String = RootGraph.REELS_GRAPH
 ) {
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(

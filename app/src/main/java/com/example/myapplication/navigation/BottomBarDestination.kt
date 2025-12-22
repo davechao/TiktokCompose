@@ -9,7 +9,6 @@ import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.myapplication.R
 
-
 enum class BottomBarDestination(
     val route: String,
     @StringRes val title: Int? = null,
@@ -17,14 +16,14 @@ enum class BottomBarDestination(
     val filledIcon: ImageVector? = null,
 ) {
     REELS(
-        route = DestinationRoute.REELS_SCREEN_ROUTE,
+        route = RootGraph.REELS_GRAPH,
         title = R.string.reels,
         unfilledIcon =  Icons.Outlined.VideoLibrary,
         filledIcon = Icons.Filled.VideoLibrary,
     ),
 
     FRIEND(
-        route = DestinationRoute.FRIEND_SCREEN_ROUTE,
+        route = RootGraph.FRIEND_GRAPH,
         title = R.string.friends,
         unfilledIcon = Icons.Outlined.People,
         filledIcon = Icons.Filled.People,
