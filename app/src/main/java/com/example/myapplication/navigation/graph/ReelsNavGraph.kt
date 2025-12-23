@@ -9,11 +9,11 @@ import com.example.myapplication.navigation.RootGraph
 
 fun NavGraphBuilder.reelsNavGraph() {
     navigation(
-        route = RootGraph.REELS_GRAPH,
-        startDestination = DestinationRoute.REELS_SCREEN_ROUTE
+        route = RootGraph.Reels.graph,
+        startDestination = DestinationRoute.Reels.route
     ) {
         composable(
-            route = DestinationRoute.REELS_SCREEN_ROUTE
+            route = DestinationRoute.Reels.route
         ) {
             ReelsScreen()
         }

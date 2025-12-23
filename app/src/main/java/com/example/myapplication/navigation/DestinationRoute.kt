@@ -1,12 +1,10 @@
 package com.example.myapplication.navigation
 
+sealed class DestinationRoute(val route: String) {
 
-object DestinationRoute {
-    const val ACCOUNT_ID = "accountId"
-
-    const val REELS_SCREEN_ROUTE = "reels_screen_route"
-    const val FRIEND_SCREEN_ROUTE = "friend_screen_route"
-    const val FRIEND_DETAIL_SCREEN_ROUTE = "friend_detail_screen_route/{$ACCOUNT_ID}"
-
-    fun friendDetailRoute(id: Int) = "friend_detail_screen_route/$id"
+    data object Reels : DestinationRoute("reels_screen_route")
+    data object Friend : DestinationRoute("friend_screen_route")
+    data object FriendDetail : DestinationRoute("friend_detail_screen_route/{accountId}") {
+        fun createRoute(accountId: Int) = "friend_detail_screen_route/$accountId"
+    }
 }

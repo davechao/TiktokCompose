@@ -7,28 +7,27 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.myapplication.ui.friend.FriendScreen
 import com.example.myapplication.navigation.DestinationRoute
-import com.example.myapplication.navigation.DestinationRoute.ACCOUNT_ID
 import com.example.myapplication.navigation.RootGraph
 import com.example.myapplication.ui.firenddetail.FriendDetailScreen
 
 fun NavGraphBuilder.friendNavGraph() {
     navigation(
-        route = RootGraph.FRIEND_GRAPH,
-        startDestination = DestinationRoute.FRIEND_SCREEN_ROUTE
+        route = RootGraph.Friend.graph,
+        startDestination = DestinationRoute.Friend.route
     ) {
         composable(
-            route = DestinationRoute.FRIEND_SCREEN_ROUTE
+            route = DestinationRoute.Friend.route
         ) {
             FriendScreen()
         }
 
         composable(
-            route = DestinationRoute.FRIEND_DETAIL_SCREEN_ROUTE,
+            route = DestinationRoute.FriendDetail.route,
             arguments = listOf(
-                navArgument(ACCOUNT_ID) { type = NavType.IntType }
+                navArgument("accountId") { type = NavType.IntType }
             )
         ) { backStackEntry ->
-            val accountId = backStackEntry.arguments?.getInt(ACCOUNT_ID) ?: return@composable
+            val accountId = backStackEntry.arguments?.getInt("accountId") ?: return@composable
             FriendDetailScreen(id = accountId)
         }
     }

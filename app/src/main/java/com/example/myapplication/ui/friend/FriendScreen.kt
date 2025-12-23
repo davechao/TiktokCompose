@@ -46,7 +46,7 @@ fun FriendScreen(
     val onItemClick = remember {
         { id: Int ->
             navController.navigate(
-                route = DestinationRoute.friendDetailRoute(id)
+                route = DestinationRoute.FriendDetail.createRoute(id)
             )
         }
     }

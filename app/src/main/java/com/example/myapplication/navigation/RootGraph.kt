@@ -1,6 +1,6 @@
 package com.example.myapplication.navigation
 
-object RootGraph {
-    const val REELS_GRAPH = "reels_graph"
-    const val FRIEND_GRAPH = "friend_graph"
+sealed class RootGraph(val graph: String) {
+    data object Reels : RootGraph("reels_graph")
+    data object Friend : RootGraph("friend_graph")
 }

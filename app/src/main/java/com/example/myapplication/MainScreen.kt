@@ -27,18 +27,18 @@ fun MainScreen() {
     val context = LocalContext.current
 
     val isShowBottomBar = when (currentDestination?.route) {
-        DestinationRoute.REELS_SCREEN_ROUTE,
-        DestinationRoute.FRIEND_SCREEN_ROUTE -> true
+        DestinationRoute.Reels.route,
+        DestinationRoute.Friend.route -> true
 
         else -> false
     }
 
     val isDarkMode = when (currentDestination?.route) {
-        DestinationRoute.REELS_SCREEN_ROUTE -> true
+        DestinationRoute.Reels.route-> true
         else -> false
     }
 
-    if (currentDestination?.route == DestinationRoute.REELS_SCREEN_ROUTE) {
+    if (currentDestination?.route == DestinationRoute.Reels.route) {
         BackHandler {
             (context as? Activity)?.finish()
         }

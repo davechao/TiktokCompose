@@ -16,14 +16,14 @@ enum class BottomBarDestination(
     val filledIcon: ImageVector? = null,
 ) {
     REELS(
-        route = RootGraph.REELS_GRAPH,
+        route = RootGraph.Reels.graph,
         title = R.string.reels,
         unfilledIcon =  Icons.Outlined.VideoLibrary,
         filledIcon = Icons.Filled.VideoLibrary,
     ),
 
     FRIEND(
-        route = RootGraph.FRIEND_GRAPH,
+        route = RootGraph.Friend.graph,
         title = R.string.friends,
         unfilledIcon = Icons.Outlined.People,
         filledIcon = Icons.Filled.People,
